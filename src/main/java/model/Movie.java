@@ -29,6 +29,10 @@ public class Movie {
 
     private Integer count;
 
+    @ManyToOne
+    @JoinColumn(name = "mpa_id")
+    private Mpa mpa;
+
     @ManyToMany
     @JoinTable(name = "movies_genres",
             joinColumns = {@JoinColumn(name = "movie_id")},
@@ -61,6 +65,7 @@ public class Movie {
                 ", year=" + year +
                 ", rating=" + rating +
                 ", count=" + count +
+                ", mpa=" + mpa +
                 '}';
     }
 }

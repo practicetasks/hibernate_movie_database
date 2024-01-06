@@ -1,5 +1,7 @@
 package service;
 
+import dao.ActorDao;
+import dao.DirectorDao;
 import dao.MovieDao;
 import model.Movie;
 
@@ -10,7 +12,10 @@ public class DatabaseService {
         while (true) {
             int command = information.printMenu();
             switch (command) {
-                case 1 -> printMovie();
+                case 0 -> {
+                    return;
+                }
+                case 1 -> printMovies();
                 case 2 -> addMovie();
                 case 3 -> deleteMovie();
                 case 4 -> updateMovie();
@@ -19,9 +24,8 @@ public class DatabaseService {
                 case 7 -> findByDirectorName();
                 case 8 -> findByYear();
                 case 9 -> getTop10();
-                case 10 -> {
-                    return;
-                }
+                case 10 -> printActors();
+                case 11 -> printDirectors();
                 default -> System.out.println("Неизвестный пункт меню");
             }
         }
@@ -29,7 +33,7 @@ public class DatabaseService {
 
     private void getTop10() {
         try (MovieDao movieDao = new MovieDao()) {
-            information.printMovie(movieDao.getTop10());
+            information.printMovies(movieDao.getTop10());
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -38,7 +42,7 @@ public class DatabaseService {
     private void findByYear() {
         try (MovieDao movieDao = new MovieDao()) {
             int year = information.getYear();
-            information.printMovie(movieDao.findByYear(year));
+            information.printMovies(movieDao.findByYear(year));
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -47,7 +51,7 @@ public class DatabaseService {
     private void findByDirectorName() {
         try (MovieDao movieDao = new MovieDao()) {
             String directorName = information.getDirectorName();
-            information.printMovie(movieDao.filterByDirector(directorName));
+            information.printMovies(movieDao.filterByDirector(directorName));
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -56,7 +60,7 @@ public class DatabaseService {
     private void findByActorName() {
         try (MovieDao movieDao = new MovieDao()) {
             String actorName = information.getActorName();
-            information.printMovie(movieDao.filterByActorName(actorName));
+            information.printMovies(movieDao.filterByActorName(actorName));
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -120,11 +124,28 @@ public class DatabaseService {
         }
     }
 
-    private void printMovie() {
+    private void printMovies() {
         try (MovieDao movieDao = new MovieDao()) {
-            information.printMovie(movieDao.getAll());
+            information.printMovies(movieDao.getAll());
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
+
+    private void printActors() {
+        try (ActorDao actorDao = new ActorDao()) {
+            information.printActors(actorDao.getAll());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private void printDirectors() {
+        try (DirectorDao directorDao = new DirectorDao()) {
+            information.printDirectors(directorDao.getAll());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
 }

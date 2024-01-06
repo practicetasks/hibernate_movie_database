@@ -1,5 +1,7 @@
 package service;
 
+import model.Actor;
+import model.Director;
 import model.Movie;
 
 import java.util.List;
@@ -23,13 +25,23 @@ public class InputInformationConsole {
         System.out.println("7. Поиск по имени режиссера");
         System.out.println("8. Поиск по годам");
         System.out.println("9. Вывести топ-10 фильмов");
-        System.out.println("10. Выход");
+        System.out.println("10. Вывести всех актеров");
+        System.out.println("11. Вывести всех режиссеров");
+        System.out.println("0. Выход");
 
         return Integer.parseInt(scanner.nextLine());
     }
 
-    public void printMovie(List<Movie> movies) {
+    public void printMovies(List<Movie> movies) {
         movies.forEach(System.out::println);
+    }
+
+    public void printActors(List<Actor> actors) {
+        actors.forEach(System.out::println);
+    }
+
+    public void printDirectors(List<Director> directors) {
+        directors.forEach(System.out::println);
     }
 
     public String getDirectorName() {
